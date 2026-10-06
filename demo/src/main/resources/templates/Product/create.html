@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Product</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-container {
+            max-width: 750px;
+            margin: 50px auto;
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header-custom {
+            background: #212529;
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .card-header-custom h2 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-header-custom p {
+            margin: 5px 0 0;
+            color: #adb5bd;
+        }
+
+        .form-body {
+            padding: 30px;
+            background: white;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .form-control {
+            border-radius: 9px;
+            padding: 11px 13px;
+            border: 1px solid #dee2e6;
+            transition: 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+        }
+
+        .image-box {
+            background: #f8f9fa;
+            border: 2px dashed #ced4da;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .btn-create {
+            padding: 11px 25px;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        .btn-back {
+            padding: 11px 20px;
+            border-radius: 9px;
+        }
+
+        .required-star {
+            color: #dc3545;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar Fragment -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container page-container">
+
+    <div class="card product-card">
+
+        <!-- Header -->
+        <div class="card-header-custom">
+
+            <h2>Create New Product</h2>
+
+            <p>
+                Add a new product to your store
+            </p>
+
+        </div>
+
+
+        <!-- Form -->
+        <div class="form-body">
+
+            <form th:action="@{/products/create}"
+                  th:object="${product}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+
+                <!-- Name -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Product Name
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           th:field="*{name}"
+                           placeholder="Enter product name"
+                           required>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Description
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <textarea class="form-control"
+                              th:field="*{description}"
+                              rows="3"
+                              placeholder="Enter product description"
+                              required></textarea>
+
+                </div>
+
+
+                <!-- Category -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Category
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           th:field="*{category}"
+                           placeholder="e.g. Electronics, Clothing"
+                           required>
+
+                </div>
+
+
+                <!-- Price -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Price
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            ₹
+                        </span>
+
+                        <input type="number"
+                               class="form-control"
+                               th:field="*{price}"
+                               placeholder="Enter price"
+                               step="0.01"
+                               min="0"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quantity -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Quantity
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <input type="number"
+                           class="form-control"
+                           th:field="*{qty}"
+                           placeholder="Enter quantity"
+                           min="0"
+                           required>
+
+                </div>
+
+
+                <!-- Image -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Product Image
+                        <span class="required-star">*</span>
+                    </label>
+
+                    <div class="image-box">
+
+                        <input type="file"
+                               class="form-control"
+                               name="file"
+                               accept="image/*"
+                               required>
+
+                        <small class="text-muted d-block mt-2">
+                            Upload JPG, PNG, WEBP or other image formats.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <a href="/products"
+                       class="btn btn-outline-secondary btn-back">
+                        ← Back
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary btn-create">
+                        Create Product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>
